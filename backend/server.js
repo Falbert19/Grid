@@ -13,9 +13,13 @@ app.use(cors());
 app.use(express.json());
 
 // API routes
-app.use('/api/products', require('./routes/productsRoutes'));
-app.use('/api/brands', require('./routes/brandsRoutes'));
+app.use('/api/products', require('./routes/productRoutes'));
+app.use('/api/brands', require('./routes/brandRoutes'));
+
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
 
 // start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => consolel.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
