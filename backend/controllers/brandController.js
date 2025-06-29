@@ -2,6 +2,10 @@
 const Brand = require('../models/Brand');
 
 exports.getAllBrands = async (req, res) => {
-  const brands = await Brand.find();
-  res.json(brands);
+  try {
+    const brands = await Brand.find();
+    res.json(brands);
+  } catch (err) {
+    res.status(500).json({ error: 'Something went wrong' });
+  }
 };
