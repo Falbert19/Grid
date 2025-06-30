@@ -23,6 +23,7 @@
 | Upload Item      | Done     | Fernando Albert |
 | Like Button      | In Dev   | Fernando Albert |
 | Filter by Brand  | Planned  | Fernando Albert |
+| Login and registration| Working | Fernando Albert |
 
 Sprint Board → [Trello Link](#)  
 Bug Tracker → [GitHub Issues](#)

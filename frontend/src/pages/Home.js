@@ -16,14 +16,14 @@ export default function Home() {
       .get(`${API_URL}/api/products`)
       .then((res) => setProducts(res.data))
       .catch((err) => {
-        console.error("💥 Axios error:", err.message);
+        console.error(" Axios error:", err.message);
         setError("Failed to load products. Please try again.");
         if (err.response) {
-          console.log("📦 Response error:", err.response.data);
+          console.log(" Response error:", err.response.data);
         } else if (err.request) {
-          console.log("📡 No response received:", err.request);
+          console.log(" No response received:", err.request);
         } else {
-          console.log("❌ Request config error:", err.message);
+          console.log(" Request config error:", err.message);
         }
       });
   }, []);
