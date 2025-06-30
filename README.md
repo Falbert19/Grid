@@ -18,7 +18,7 @@
 
 | Feature          | Status     | Assignee      |
 |------------------|------------|---------------|
-| Auth (JWT)       | Done     | Fernando Albert |
+| Auth (JWT)       | Working     | Fernando Albert |
 | Feed Scroll      | Working  | Fernando Albert |
 | Upload Item      | Done     | Fernando Albert |
 | Like Button      | In Dev   | Fernando Albert |
