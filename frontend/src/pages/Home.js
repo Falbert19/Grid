@@ -35,11 +35,7 @@ export default function Home() {
   };
 
   if (error) {
-    return (
-      <div className="text-center text-red-500 mt-8">
-        {error}
-      </div>
-    );
+    return <div className="text-center text-red-500 mt-8">{error}</div>;
   }
 
   return (
@@ -47,15 +43,17 @@ export default function Home() {
       dataLength={visibleCount}
       next={fetchMore}
       hasMore={visibleCount < products.length}
-      loader={<h4 className="text-center text-gray-500 py-4">Loading more...</h4>}
+      loader={
+        <h4 className="text-center text-gray-500 py-4">Loading more...</h4>
+      }
     >
       <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
-  {products.slice(0, visibleCount).map((product) => (
-    <div key={product._id} className="snap-start h-screen">
-      <ProductCard product={product} />
-    </div>
-  ))}
-</div>
+        {products.slice(0, visibleCount).map((product) => (
+          <div key={product._id} className="snap-start h-screen">
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
     </InfiniteScroll>
   );
 }
