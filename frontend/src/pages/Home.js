@@ -49,11 +49,13 @@ export default function Home() {
       hasMore={visibleCount < products.length}
       loader={<h4 className="text-center text-gray-500 py-4">Loading more...</h4>}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {products.slice(0, visibleCount).map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
-      </div>
+      <div className="h-screen overflow-y-scroll snap-y snap-mandatory">
+  {products.slice(0, visibleCount).map((product) => (
+    <div key={product._id} className="snap-start h-screen">
+      <ProductCard product={product} />
+    </div>
+  ))}
+</div>
     </InfiniteScroll>
   );
 }
