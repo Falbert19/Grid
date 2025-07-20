@@ -1,10 +1,11 @@
-//src/services/AuthService.js
+// src/services/AuthService.js
 import axios from "axios";
 
-const API_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:5050/api/auth";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5050";
 
-const register = (data) => axios.post(`${API_URL}/register`, data);
-const login = (data) => axios.post(`${API_URL}/login`, data);
+const AuthService = {
+  login: (credentials) => axios.post(`${API_URL}/api/auth/login`, credentials),
+  register: (userData) => axios.post(`${API_URL}/api/auth/register`, userData),
+};
 
-export default { register, login };
+export default AuthService;
