@@ -1,16 +1,18 @@
 // frontend/src/pages/Register.js
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthService from "../services/AuthService";
 
 export default function Register() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [welcomeMsg, setWelcomeMsg] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setError("");
-    setSuccess("");
+    setWelcomeMsg("");
   };
 
   const handleSubmit = async (e) => {
@@ -21,9 +23,22 @@ export default function Register() {
     }
 
     try {
-      const response = await AuthService.register(form);
-      setSuccess("Registration successful. You can now log in.");
-      setForm({ username: "", email: "", password: "" });
+      // Register user
+      await AuthService.register(form);
+
+      // Auto log after registration
+      const loginResponse = await AuthService.login({
+        email: form.email,
+        password: form.password,
+      });
+
+      localStorage.setItem("token", loginResponse.data.token);
+      setWelcomeMsg(`Welcome!!!, ${form.username}! Redirecting...`);
+
+      // Redirect to home
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed.");
     }
@@ -58,7 +73,7 @@ export default function Register() {
           className="w-full px-3 py-2 border rounded"
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
-        {success && <p className="text-green-500 text-sm">{success}</p>}
+        {welcomeMsg && <p className="text-green-600 text-sm">{welcomeMsg}</p>}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
