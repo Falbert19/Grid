@@ -52,14 +52,16 @@ router.get('/saved', verifyToken, async (req, res) => {
 });
 
 // Get cart items
+// routes/userRoutes.js
 router.get('/cart', verifyToken, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).populate('cartItems');
+    const user = await User.findById(req.user.id).populate('cartItems.product');
     res.json(user.cartItems);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch cart items' });
   }
 });
+
 
 // Remove from saved
 router.delete('/unsave/:productId', verifyToken, async (req, res) => {
