@@ -6,6 +6,8 @@ const productSchema = new mongoose.Schema({
   name: String,
   image: String,
   price: Number,
+  sizes: [String],
+  colors: [String],
   likes: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });

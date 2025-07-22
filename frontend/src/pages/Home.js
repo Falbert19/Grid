@@ -1,4 +1,4 @@
-//Home.js
+// frontend/src/pages/Home.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -18,13 +18,6 @@ export default function Home() {
       .catch((err) => {
         console.error(" Axios error:", err.message);
         setError("Failed to load products. Please try again.");
-        if (err.response) {
-          console.log(" Response error:", err.response.data);
-        } else if (err.request) {
-          console.log(" No response received:", err.request);
-        } else {
-          console.log(" Request config error:", err.message);
-        }
       });
   }, []);
 
