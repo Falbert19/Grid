@@ -1,10 +1,10 @@
-// Brand.js
+// backend/models/Brand.js
 const mongoose = require('mongoose');
 
-const brandSchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  logo: String,
-});
+const BrandSchema = new mongoose.Schema({
+  name: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+}, { timestamps: true });
 
-module.exports = mongoose.model('Brand', brandSchema);
+module.exports = mongoose.model('Brand', BrandSchema);

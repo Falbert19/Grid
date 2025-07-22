@@ -1,42 +1,57 @@
 // frontend/src/components/ProductCard.js
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5050";
 
 export default function ProductCard({ product }) {
-  const handleSave = () => {
-    const saved = JSON.parse(localStorage.getItem("savedItems")) || [];
-    const isAlreadySaved = saved.some((p) => p._id === product._id);
-    if (!isAlreadySaved) {
-      localStorage.setItem("savedItems", JSON.stringify([...saved, product]));
-    }
-  };
+  const [popup, setPopup] = useState("");
 
-  const handleAddToCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const isAlreadyInCart = cart.some((p) => p._id === product._id);
-    if (!isAlreadyInCart) {
-      localStorage.setItem("cartItems", JSON.stringify([...cart, product]));
+  const token = localStorage.getItem("token");
+
+  const handleAction = async (action) => {
+    try {
+      const url = `${API_URL}/api/user/${action}/${product._id}`;
+      await axios.post(url, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setPopup(`Item ${action === "save" ? "saved to favorites" : "added to cart"}`);
+      setTimeout(() => setPopup(""), 2000);
+    } catch (err) {
+      console.error(`Failed to ${action}:`, err);
+      setPopup("You must be logged in.");
+      setTimeout(() => setPopup(""), 2000);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full p-4">
-      <img src={product.image} alt={product.name} className="h-64 object-cover mb-4 rounded" />
-      <h2 className="text-xl font-bold mb-1">{product.name}</h2>
-      <p className="text-gray-600">${product.price}</p>
-
-      <div className="text-sm text-gray-700 mt-2">
-        <p><strong>Sizes:</strong> {product.sizes.join(", ")}</p>
-        <p><strong>Colors:</strong> {product.colors.join(", ")}</p>
-      </div>
-
-      <div className="flex gap-4 mt-4">
-        <button onClick={handleSave} className="px-3 py-1 bg-blue-600 text-white rounded">
+    <div className="relative p-4">
+      <img src={product.image} alt={product.name} className="w-full h-80 object-cover rounded" />
+      <h3 className="text-xl font-bold mt-2">{product.name}</h3>
+      <p className="text-gray-700">${product.price}</p>
+      <p className="text-sm">Sizes: {product.sizes.join(", ")}</p>
+      <p className="text-sm mb-2">Colors: {product.colors.join(", ")}</p>
+      <div className="flex gap-4">
+        <button
+          onClick={() => handleAction("save")}
+          className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
           Save
         </button>
-        <button onClick={handleAddToCart} className="px-3 py-1 bg-green-600 text-white rounded">
+        <button
+          onClick={() => handleAction("cart")}
+          className="px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+        >
           Add to Cart
         </button>
       </div>
+
+      {popup && (
+        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-black text-white px-4 py-2 rounded shadow">
+          {popup}
+        </div>
+      )}
     </div>
   );
 }

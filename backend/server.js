@@ -17,6 +17,7 @@ app.use(express.json());
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/brands', require('./routes/brandRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/user', require('./routes/userRoutes'));
 
 // Serve static frontend only in production
 if (process.env.NODE_ENV === 'production') {
