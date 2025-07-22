@@ -1,4 +1,4 @@
-//Product.js
+// backend/models/Product.js
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
   price: Number,
   sizes: [String],
   colors: [String],
+  stock: { type: Number, default: 0 },
   likes: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });

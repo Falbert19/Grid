@@ -1,13 +1,13 @@
 // backend/routes/productRoutes.js
 const express = require('express');
 const router = express.Router();
-const { getAllProducts } = require('../controllers/productController');
+const { getAllProducts, updateProduct } = require('../controllers/productController');
+const verifyToken = require('../middleware/verifyToken');
 
-router.get('/test', (req, res) => {
-  console.log(' /api/products/test route hit');
-  res.send(' Product route is working');
-});
-
+// Route to get all products
 router.get('/', getAllProducts);
+
+// Route to update a product
+router.put('/:id', verifyToken, updateProduct); // Make sure updateProduct is defined and exported
 
 module.exports = router;

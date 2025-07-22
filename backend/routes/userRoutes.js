@@ -1,4 +1,6 @@
-//backend/routes/userRoutes.js
+const express = require('express');
+const router = express.Router();
+const verifyToken = require('../middleware/verifyToken');
 const User = require('../models/User');
 const Product = require('../models/Product');
 
@@ -49,3 +51,5 @@ router.get('/cart', verifyToken, async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch cart items' });
   }
 });
+
+module.exports = router;
