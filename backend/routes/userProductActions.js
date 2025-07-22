@@ -30,6 +30,32 @@ router.post('/cart/:productId', verifyToken, async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Server error adding to cart' });
   }
+  
 });
+
+// Remove from saved
+router.delete('/unsave/:productId', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    user.savedItems.pull(req.params.productId);
+    await user.save();
+    res.json({ message: 'Item removed from saved items' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to remove saved item' });
+  }
+});
+
+// Remove from cart
+router.delete('/remove-cart/:productId', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    user.cartItems.pull(req.params.productId);
+    await user.save();
+    res.json({ message: 'Item removed from cart' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to remove cart item' });
+  }
+});
+
 
 module.exports = router;
