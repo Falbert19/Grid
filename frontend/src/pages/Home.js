@@ -1,5 +1,5 @@
 // frontend/src/pages/Home.js
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ProductCard from "../components/ProductCard";
