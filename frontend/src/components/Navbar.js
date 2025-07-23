@@ -12,32 +12,31 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  // Only show login/register nav on auth pages
   const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
 
   return (
-    <nav className="p-4 bg-white shadow flex gap-4 justify-between">
-      <div className="flex gap-4">
-        <Link to="/">Home</Link>
-        {isLoggedIn && (
-          <>
-            <Link to="/cart">Cart</Link>
-            <Link to="/saved">Saved</Link>
-            <Link to="/profile">Profile</Link>
-          </>
-        )}
+    <nav className="bg-zinc-900 text-white px-4 py-3 flex justify-between items-center shadow-md">
+      {/* Logo/Title */}
+      <div className="text-xl font-bold tracking-wide">
+        <Link to="/" className="hover:text-gray-300">Grid</Link>
       </div>
-      <div className="flex gap-4">
-        {!isLoggedIn && isAuthPage && (
+
+      {/* Main Navigation */}
+      <div className="flex gap-6 items-center">
+        {isLoggedIn ? (
           <>
-            <Link to="/register">Register</Link>
-            <Link to="/login">Login</Link>
+            <Link to="/cart" className="hover:text-gray-300">Cart</Link>
+            <Link to="/saved" className="hover:text-gray-300">Saved</Link>
+            <Link to="/profile" className="hover:text-gray-300">Profile</Link>
+            <button onClick={handleLogout} className="text-red-500 hover:text-red-400">Logout</button>
           </>
-        )}
-        {isLoggedIn && (
-          <button onClick={handleLogout} className="text-red-500">
-            Logout
-          </button>
+        ) : (
+          isAuthPage && (
+            <>
+              <Link to="/register" className="hover:text-gray-300">Register</Link>
+              <Link to="/login" className="hover:text-gray-300">Login</Link>
+            </>
+          )
         )}
       </div>
     </nav>

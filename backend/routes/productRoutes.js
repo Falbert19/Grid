@@ -1,13 +1,30 @@
 // backend/routes/productRoutes.js
 const express = require('express');
 const router = express.Router();
-const { getAllProducts, updateProduct } = require('../controllers/productController');
 const verifyToken = require('../middleware/verifyToken');
+const Product = require('../models/Product');
 
-// Route to get all products
-router.get('/', getAllProducts);
+// Create product (brand only)
+router.post('/', verifyToken, async (req, res) => {
+  try {
+    const { name, image, price, sizes, colors, stock } = req.body;
 
-// Route to update a product
-router.put('/:id', verifyToken, updateProduct); // Make sure updateProduct is defined and exported
+    const newProduct = new Product({
+      brand: req.user.id,
+      name,
+      image,
+      price,
+      sizes,
+      colors,
+      stock
+    });
+
+    await newProduct.save();
+    res.status(201).json(newProduct);
+  } catch (err) {
+    console.error('Create product error:', err);
+    res.status(500).json({ error: 'Failed to create product' });
+  }
+});
 
 module.exports = router;

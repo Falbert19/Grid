@@ -13,7 +13,7 @@ import Profile from "./pages/Profile";
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-zinc-100">
+      <div className="dark-h-screen bg-zinc-900 text-white">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
