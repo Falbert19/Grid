@@ -26,7 +26,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(frontendPath));
 
   app.get('*', (req, res) => {
-    // Only serve index.html if file exists
     const indexPath = path.join(frontendPath, 'index.html');
     if (fs.existsSync(indexPath)) {
       res.sendFile(indexPath);
