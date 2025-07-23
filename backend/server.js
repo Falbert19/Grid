@@ -19,7 +19,7 @@ app.use('/api/brands', require('./routes/brandRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
 
-// Serve static frontend only in production
+// Serve static
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
 

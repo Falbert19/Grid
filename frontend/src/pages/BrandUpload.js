@@ -35,13 +35,13 @@ export default function BrandUpload() {
           Authorization: `Bearer ${token}`
         }
       });
-      setMessage("✅ Product uploaded!");
+      setMessage("Product uploaded!");
       setForm({
         name: "", image: "", price: "", sizes: "", colors: "", stock: ""
       });
     } catch (err) {
       console.error(err);
-      setMessage("❌ Upload failed.");
+      setMessage("Upload failed.");
     }
   };
 

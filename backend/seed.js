@@ -60,10 +60,10 @@ async function seedData() {
 
     await Product.insertMany(productsWithBrand);
 
-    console.log('✅ Seed successful');
+    console.log('Seed successful');
     process.exit();
   } catch (err) {
-    console.error('❌ Seed failed:', err.message);
+    console.error('Seed failed:', err.message);
     process.exit(1);
   }
 }

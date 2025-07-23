@@ -9,7 +9,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Cart from "./pages/Cart";
 import Saved from "./pages/Saved";
 import Profile from "./pages/Profile";
-
+import BrandUpload from "./pages/BrandUpload";
 function App() {
   return (
     <Router>
@@ -34,6 +34,12 @@ function App() {
               <Profile />
             </ProtectedRoute>
           } />
+          <Route path="/upload" element={
+            <ProtectedRoute>
+              <BrandUpload />
+            </ProtectedRoute>
+          } />
+
         </Routes>
       </div>
     </Router>

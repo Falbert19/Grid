@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../server'); // Make sure your server exports the Express app
+const app = require('../server');
 
 describe('GET /api/products', () => {
   it('should return an array of products', async () => {
