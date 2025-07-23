@@ -5,7 +5,7 @@ const User = require('../models/User');
 const Product = require('../models/Product');
 
 // Save an item
-router.post('/save/:productId', verifyToken, async (req, res) => {
+router.post('/save/productId', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user.savedItems.includes(req.params.productId)) {
@@ -19,7 +19,7 @@ router.post('/save/:productId', verifyToken, async (req, res) => {
 });
 
 // Add to cart
-router.post('/cart/:productId', verifyToken, async (req, res) => {
+router.post('/cart/productId', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
 
@@ -64,7 +64,7 @@ router.get('/cart', verifyToken, async (req, res) => {
 
 
 // Remove from saved
-router.delete('/unsave/:productId', verifyToken, async (req, res) => {
+router.delete('/unsave/productId', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     user.savedItems.pull(req.params.productId);
@@ -76,7 +76,7 @@ router.delete('/unsave/:productId', verifyToken, async (req, res) => {
 });
 
 // Remove from cart
-router.delete('/remove-cart/:productId', verifyToken, async (req, res) => {
+router.delete('/remove-cart/productId', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     user.cartItems.pull(req.params.productId);
