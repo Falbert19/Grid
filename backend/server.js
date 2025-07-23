@@ -21,10 +21,18 @@ app.use('/api/user', require('./routes/userRoutes'));
 
 // Serve static
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
+  const frontendPath = path.join(__dirname, '../frontend/build');
+
+  app.use(express.static(frontendPath));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+    // Only serve index.html if file exists
+    const indexPath = path.join(frontendPath, 'index.html');
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      res.status(404).send("Build not found");
+    }
   });
 }
 
