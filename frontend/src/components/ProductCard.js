@@ -1,4 +1,5 @@
 // frontend/src/components/ProductCard.js
+// eslint-disable next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -25,7 +26,6 @@ export default function ProductCard({ product }) {
       return;
     }
 
-    const action = actionType === "save" ? saved : inCart ? "remove" : actionType;
     const url = `${API_URL}/api/user/${actionType === "save" ? (saved ? "unsave" : "save") : inCart ? "remove-cart" : "cart"}/${product._id}`;
 
     try {
