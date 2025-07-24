@@ -23,22 +23,24 @@ export default function Navbar() {
 
       {/* Main Navigation */}
 <div className="flex gap-6 items-center">
-  {isLoggedIn ? (
-    <>
-      <Link to="/cart" className="hover:text-gray-300">Cart</Link>
-      <Link to="/saved" className="hover:text-gray-300">Saved</Link>
-      <Link to="/profile" className="hover:text-gray-300">Profile</Link>
-      <Link to="/upload" className="hover:text-gray-300">Upload</Link>
-      <button onClick={handleLogout} className="text-red-500 hover:text-red-400">Logout</button>
-    </>
-  ) : (
-    isAuthPage && (
-      <>
-        <Link to="/register" className="hover:text-gray-300">Register</Link>
-        <Link to="/login" className="hover:text-gray-300">Login</Link>
-      </>
-    )
-  )}
+ {isLoggedIn ? (
+  <>
+    <Link to="/cart" className="hover:text-gray-300">Cart</Link>
+    <Link to="/saved" className="hover:text-gray-300">Saved</Link>
+    <Link to="/profile" className="hover:text-gray-300">Profile</Link>
+    <Link to="/upload" className="hover:text-gray-300">Upload</Link>
+    <button onClick={handleLogout} className="text-red-500 hover:text-red-400">Logout</button>
+  </>
+) : (
+  <>
+    {location.pathname !== "/login" && (
+      <Link to="/login" className="hover:text-gray-300">Login</Link>
+    )}
+    {location.pathname !== "/register" && (
+      <Link to="/register" className="hover:text-gray-300">Register</Link>
+    )}
+  </>
+)}
     </div>
     </nav>
   );

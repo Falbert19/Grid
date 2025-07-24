@@ -37,7 +37,7 @@ export default function Login() {
           placeholder="Email"
           value={form.email}
           onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-black"
         />
         <input
           type="password"
@@ -45,7 +45,7 @@ export default function Login() {
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-black"
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <button

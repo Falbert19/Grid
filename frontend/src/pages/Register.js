@@ -54,7 +54,7 @@ export default function Register() {
           placeholder="Username"
           value={form.username}
           onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-black"
         />
         <input
           type="email"
@@ -62,7 +62,7 @@ export default function Register() {
           placeholder="Email"
           value={form.email}
           onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-black"
         />
         <input
           type="password"
@@ -70,7 +70,7 @@ export default function Register() {
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-3 py-2 border rounded text-black"
         />
         {error && <p className="text-red-500 text-sm">{error}</p>}
         {welcomeMsg && <p className="text-green-600 text-sm">{welcomeMsg}</p>}
