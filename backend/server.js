@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const fs = require('fs');
 const connectDB = require('./config/db');
- // <-- Add this
+
 
 
 dotenv.config();
@@ -21,22 +21,6 @@ app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/brands', require('./routes/brandRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
-
-// Serve static
-if (process.env.NODE_ENV === 'production') {
-  const frontendPath = path.join(__dirname, '../frontend/build');
-
-  app.use(express.static(frontendPath));
-
-  app.get('*', (req, res) => {
-    const indexPath = path.join(frontendPath, 'index.html');
-    if (fs.existsSync(indexPath)) {
-      res.sendFile(indexPath);
-    } else {
-      res.status(404).send("Build not found");
-    }
-  });
-}
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
