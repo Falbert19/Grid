@@ -32,16 +32,22 @@ export default function BrandUpload() {
   };
 
   const uploadToCloudinary = async () => {
-    const data = new FormData();
-    data.append("file", imageFile);
-    data.append("upload_preset", UPLOAD_PRESET);
+  const data = new FormData();
+  data.append("file", imageFile);
+  data.append("upload_preset", UPLOAD_PRESET);
 
+  try {
     const res = await axios.post(
       `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
       data
     );
     return res.data.secure_url;
-  };
+  } catch (err) {
+    console.error("Cloudinary error:", err.response?.data || err.message);
+    throw new Error("Cloudinary upload failed");
+  }
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
