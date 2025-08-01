@@ -2,43 +2,31 @@
 const express = require('express');
 const router = express.Router();
 const verifyToken = require('../middleware/verifyToken');
-const Product = require('../models/Product');
 const multer = require('multer');
-const path = require('path');
-
-// Storage for image files
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Ensure this folder exists
-  },
-  filename: (req, file, cb) => {
-    const uniqueName = Date.now() + '-' + file.originalname;
-    cb(null, uniqueName);
-  },
-});
-
+const { storage } = require('../config/cloudinary');
 const upload = multer({ storage });
+const Product = require('../models/Product');
 
-// Create product (brand only)
-router.post('/', verifyToken, async (req, res) => {
+// POST /api/products with image
+router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   try {
-    const { name, image, price, sizes, colors, stock } = req.body;
+    const { name, price, sizes, colors, stock } = req.body;
 
     const newProduct = new Product({
       brand: req.user.id,
       name,
-      image,
+      image: req.file.path, // Cloudinary URL
       price,
-      sizes,
-      colors,
-      stock
+      sizes: sizes.split(',').map(s => s.trim()),
+      colors: colors.split(',').map(c => c.trim()),
+      stock: parseInt(stock)
     });
 
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (err) {
-    console.error('Create product error:', err);
-    res.status(500).json({ error: 'Failed to create product' });
+    console.error('Upload error:', err);
+    res.status(500).json({ error: 'Upload failed' });
   }
 });
 
