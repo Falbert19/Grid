@@ -1,6 +1,7 @@
 //frontend/src/pages/BrandUpload.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useDropzone } from "react-dropzone";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5050";
 
@@ -14,43 +15,70 @@ export default function BrandUpload() {
     stock: ""
   });
 
+  const [imageFile, setImageFile] = useState(null);
   const [message, setMessage] = useState("");
-
   const token = localStorage.getItem("token");
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: { "image/*": [] },
+    onDrop: (acceptedFiles) => {
+      setImageFile(acceptedFiles[0]);
+    },
+  });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${API_URL}/api/products`, {
-        ...form,
-        sizes: form.sizes.split(",").map(s => s.trim()),
-        colors: form.colors.split(",").map(c => c.trim()),
-        stock: parseInt(form.stock)
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setMessage("Product uploaded!");
-      setForm({
-        name: "", image: "", price: "", sizes: "", colors: "", stock: ""
-      });
-    } catch (err) {
-      console.error(err);
-      setMessage("Upload failed.");
-    }
-  };
+  e.preventDefault();
+
+  if (!imageFile) return setMessage("Please upload an image.");
+
+  const formData = new FormData();
+  formData.append("image", imageFile);
+  formData.append("name", form.name);
+  formData.append("price", form.price);
+  formData.append("sizes", form.sizes);
+  formData.append("colors", form.colors);
+  formData.append("stock", form.stock);
+
+  try {
+    await axios.post(`${API_URL}/api/products`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data"
+      }
+    });
+    setMessage(" Product uploaded!");
+    setForm({ name: "", image: "", price: "", sizes: "", colors: "", stock: "" });
+    setImageFile(null);
+  } catch (err) {
+    console.error(err);
+    setMessage("Upload failed.");
+  }
+};
 
   return (
     <div className="max-w-xl mx-auto p-4 bg-zinc-800 text-white rounded">
       <h2 className="text-2xl mb-4 font-bold">Upload Product</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+
+        <div
+          {...getRootProps()}
+          className="border-2 border-dashed border-gray-500 rounded p-4 text-center bg-zinc-700 cursor-pointer"
+        >
+          <input {...getInputProps()} />
+          {imageFile ? (
+            <p>{imageFile.name}</p>
+          ) : isDragActive ? (
+            <p>Drop the image here...</p>
+          ) : (
+            <p>Click or drag image to upload</p>
+          )}
+        </div>
+
         <input name="name" placeholder="Product name" className="p-2 bg-zinc-700 rounded" value={form.name} onChange={handleChange} required />
-        <input name="image" placeholder="Image URL" className="p-2 bg-zinc-700 rounded" value={form.image} onChange={handleChange} required />
         <input name="price" placeholder="Price" className="p-2 bg-zinc-700 rounded" value={form.price} onChange={handleChange} required />
         <input name="sizes" placeholder="Sizes (comma-separated)" className="p-2 bg-zinc-700 rounded" value={form.sizes} onChange={handleChange} />
         <input name="colors" placeholder="Colors (comma-separated)" className="p-2 bg-zinc-700 rounded" value={form.colors} onChange={handleChange} />
