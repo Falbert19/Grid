@@ -59,3 +59,28 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
     res.status(500).json({ error: 'Product creation failed' });
   }
 });
+
+// Create product
+router.post('/', verifyToken, async (req, res) => {
+  try {
+    const { name, image, price, sizes, colors, stock } = req.body;
+
+    const newProduct = new Product({
+      brand: req.user.id,
+      name,
+      image,
+      price,
+      sizes,
+      colors,
+      stock
+    });
+
+    await newProduct.save();
+    res.status(201).json(newProduct);
+  } catch (err) {
+    console.error('Create product error:', err);
+    res.status(500).json({ error: 'Failed to create product' });
+  }
+});
+
+module.exports = router;
