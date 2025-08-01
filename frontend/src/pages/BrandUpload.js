@@ -4,8 +4,8 @@ import axios from "axios";
 import { useDropzone } from "react-dropzone";
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5050";
-const CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+const CLOUD_NAME = "dpsb0rnyg";
+const UPLOAD_PRESET = "ml_default";
 
 export default function BrandUpload() {
   const [form, setForm] = useState({
