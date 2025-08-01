@@ -4,12 +4,12 @@ const router = express.Router();
 const verifyToken = require('../middleware/verifyToken');
 const Product = require('../models/Product');
 
-// Create product (Cloudinary handled by frontend)
+// Create product
 router.post('/', verifyToken, async (req, res) => {
   try {
     const { name, image, price, sizes, colors, stock } = req.body;
 
-    if (!image) return res.status(400).json({ error: "Image URL is required" });
+    if (!image) return res.status(400).json({ error: 'Image URL is required' });
 
     const product = new Product({
       brand: req.user.id,
