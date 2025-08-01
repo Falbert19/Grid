@@ -18,10 +18,15 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   try {
     const { name, price, sizes, colors, stock } = req.body;
 
+    if (!req.file) return res.status(400).json({ error: "No image file provided" });
+
     const stream = cloudinary.uploader.upload_stream(
       { resource_type: 'image' },
       async (error, result) => {
-        if (error) return res.status(500).json({ error: 'Cloudinary upload failed' });
+        if (error) {
+          console.error('Cloudinary error:', error);
+          return res.status(500).json({ error: 'Cloudinary upload failed' });
+        }
 
         const product = new Product({
           brand: req.user.id,

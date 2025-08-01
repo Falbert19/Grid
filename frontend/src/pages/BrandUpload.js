@@ -35,7 +35,6 @@ export default function BrandUpload() {
     const data = new FormData();
     data.append("file", imageFile);
     data.append("upload_preset", UPLOAD_PRESET);
-    data.append("cloud_name", CLOUD_NAME);
 
     const res = await axios.post(
       `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
