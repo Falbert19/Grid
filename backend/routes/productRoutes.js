@@ -10,7 +10,7 @@ const {
 //get all products
 router.get('/', getAllProducts);
 
-router.put('/:id', verifyToken updateProduct);
+router.put('/:id', verifyToken, updateProduct);
 
 // Create product
 router.post('/', verifyToken, async (req, res) => {
