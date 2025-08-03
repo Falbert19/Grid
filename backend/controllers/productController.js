@@ -1,5 +1,4 @@
 // backend/controllers/productController.js
-
 const Product = require('../models/Product');
 
 exports.getAllProducts = async (req, res) => {
