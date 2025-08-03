@@ -7,6 +7,8 @@ const Product = require('../models/Product');
 // Create product
 router.post('/', verifyToken, async (req, res) => {
   try {
+    console.log("Incoming product data:", req.body);  // <-- ADD THIS
+
     const { name, image, price, sizes, colors, stock } = req.body;
 
     if (!image) return res.status(400).json({ error: 'Image URL is required' });
@@ -22,6 +24,7 @@ router.post('/', verifyToken, async (req, res) => {
     });
 
     await product.save();
+    console.log("Product saved:", product);  // <-- OPTIONAL
     res.status(201).json(product);
   } catch (err) {
     console.error('Create product error:', err);
