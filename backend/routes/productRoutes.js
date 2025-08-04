@@ -22,7 +22,7 @@ router.post('/', verifyToken, async (req, res) => {
     if (!image) return res.status(400).json({ error: 'Image URL is required' });
 
     const product = new Product({
-      brand: req.user.id,
+      brand: req.user._id || req.user.id,
       name,
       image,
       price,
