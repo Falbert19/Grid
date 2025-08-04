@@ -20,7 +20,8 @@ export default function Login() {
 
     try {
       const response = await AuthService.login(form);
-      localStorage.setItem("token", response.data.token);
+      const { data } = response;
+      localStorage.setItem("token", data.token);
       window.location.href = "/"; // Redirect to homepage
     } catch (err) {
       setError(err.response?.data?.message || "Login failed.");
